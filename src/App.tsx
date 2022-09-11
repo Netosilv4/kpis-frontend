@@ -1,19 +1,29 @@
+import { useContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import AuthProvider from "./contexts/AuthProvider";
-import LoadingProvider from "./contexts/Loading";
+import { AuthContext } from "./contexts/AuthProvider";
+import { DrawerProvider } from "./contexts/DrawerProvider";
+import Dashboard from "./pages/dashboard";
 import SignIn from "./pages/login";
+
 function App() {
-  return (
-    <LoadingProvider>
-      <AuthProvider>
+  const { user } = useContext(AuthContext)
+
+  if(user) {
+    return (
+      <DrawerProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<SignIn />} />
+            <Route path="/" element={<Dashboard />} />
+            <Route path="*" element={<h1>404</h1>} />
           </Routes>
         </BrowserRouter>
-      </AuthProvider>
-    </LoadingProvider>
-  );
+      </DrawerProvider>
+    )
+  }
+
+  return (
+    <SignIn />
+  )
 }
 
 export default App;

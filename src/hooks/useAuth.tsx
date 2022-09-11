@@ -1,13 +1,31 @@
-import { FormEvent, useContext, useState } from "react"
+import { FormEvent, useContext, useEffect, useState } from "react"
 import axios from 'axios'
 import { loadingContext } from "../contexts/Loading"
 
 const { REACT_APP_API_URL } = process.env
 
+export interface UserInterface {
+    id: string
+    nome: string
+    created_at: string
+    updated_at: string
+    status: string
+    cargo: string
+    emailGestor?: string
+    token: string
+}
+
 const useAuth = () => {
-    const [user, setUser] = useState<string>()
+    const [user, setUser] = useState<UserInterface>()
     const [error, setError] = useState<string>()
     const { setLoading } = useContext(loadingContext)
+
+    useEffect(() => {
+        const user = localStorage.getItem('user')
+        if (user) {
+            setUser(JSON.parse(user))
+        }
+    }, [])
 
     const login = async (event: FormEvent<HTMLFormElement>) => {
         try {
@@ -18,18 +36,25 @@ const useAuth = () => {
                 email: data.get('email'),
             })
             setLoading(false)
+            localStorage.setItem('kpis-token', JSON.stringify(response.data))
             setUser(response.data)
         } catch (err: any) {
-            console.log("Erro", err)
             setLoading(false)
+            localStorage.removeItem('kpis-token')
             setError(err.response.data.message)
         }
+    }
+
+    const logout = () => {
+        localStorage.removeItem('kpis-token')
+        setUser(undefined)
     }
 
     return {
         user,
         login,
-        error
+        error,
+        logout
     }
 }
 
