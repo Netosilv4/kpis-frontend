@@ -15,7 +15,6 @@ const theme = createTheme();
 
 export default function SignIn() {
  const { login, error } = useContext(AuthContext)
-
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">

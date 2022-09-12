@@ -7,10 +7,13 @@ interface DrawerProviderI {
     open: boolean
     handleDrawerOpen: () => void
     handleDrawerClose: () => void
+    setPage: (page: string) => void
+    page: string
 }
 
 export const DrawerProvider = ({ children } : { children: JSX.Element}) => {
     const [open, setOpen] = useState(false);
+    const [page, setPage] = useState("HEADCOUNT");
     
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -26,6 +29,8 @@ export const DrawerProvider = ({ children } : { children: JSX.Element}) => {
             open,
             handleDrawerOpen,
             handleDrawerClose,
+            setPage,
+            page
         }}
         >
         {children}

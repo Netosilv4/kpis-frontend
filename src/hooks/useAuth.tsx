@@ -21,7 +21,7 @@ const useAuth = () => {
     const { setLoading } = useContext(loadingContext)
 
     useEffect(() => {
-        const user = localStorage.getItem('user')
+        const user = localStorage.getItem('kpis-token')
         if (user) {
             setUser(JSON.parse(user))
         }
