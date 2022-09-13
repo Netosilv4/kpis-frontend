@@ -10,15 +10,14 @@ import 'dayjs/locale/pt-br';
 import { HtmlTooltip } from '../tooltips/styles';
 
 
-const HeadCounterChart = () => {
-
-    const { data, dateRange, setDateRange } = useCharts(EnumCharts.headCountChart)
+const TurnoverChart = () => {
+    const { data, dateRange, setDateRange } = useCharts(EnumCharts.turnoverChart)
 
     if(!data) return null
 
     return (
         <div style={{ width: '100%', height: "400px", paddingTop: '20px'}}>
-        <Typography variant="h5" style={{ paddingBottom: '10px'}}>Análise Headcount</Typography>
+        <Typography variant="h5" style={{ paddingBottom: '10px'}}>Análise Turnover</Typography>
         <Box display="flex" style={{ gap: '20px', alignItems: "center", width: '90%', justifyContent: "space-between"}}>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
         <DatePicker
@@ -32,7 +31,7 @@ const HeadCounterChart = () => {
             renderInput={(params: any) => <TextField {...params} helperText={''} />}
           />
         </LocalizationProvider>
-        <Card style={{ padding: '20px' }}>
+        <Card style={{ padding: '20px'}}>
             <Box style={{ flexDirection: "column"}}>
                 <Typography variant='body2' style={{ fontWeight: 700, display: "flex", alignItems: "center", gap: '10px'}}>
                     <Percent color='primary'/> Balanço geral: <Typography variant='caption' style={{ fontWeight: 400}}>{data.generalData.balancoGeral}%</Typography>
@@ -40,10 +39,10 @@ const HeadCounterChart = () => {
                         title={
                             <>
                                 <Typography variant='caption'>
-                                    Quer saber mais sobre como é calculado o Headcount de uma empresa ?
+                                    Quer saber mais sobre como é calculado o <strong>Turnover</strong> de uma empresa ?
                                 </Typography>
                                 <Typography>
-                                    <Link fontSize={14} href="https://betterfly.com/pt-br/blog/o-que-e-headcount/#:~:text=Para%20realizar%20o%20c%C3%A1lculo%20do,os%20colaboradores%20entram%20nesse%20c%C3%A1lculo." target="_blank">
+                                    <Link fontSize={14} href="https://blog.solides.com.br/como-calcular-o-turnover/" target="_blank">
                                         Clique aqui
                                     </Link>
                                 </Typography>
@@ -106,4 +105,4 @@ const HeadCounterChart = () => {
     )
 }
 
-export default HeadCounterChart
+export default TurnoverChart

@@ -4,6 +4,7 @@ import AppBar from "../../components/appbar";
 import MiniDrawer from "../../components/drawer";
 import { ContentContainer, DrawerHeader } from "../../components/drawer/styles";
 import HeadCounterChart from "../../components/headCountChart";
+import TurnoverChart from "../../components/turnoverChart";
 import { DrawerContext } from "../../contexts/DrawerProvider";
 
 export default function Dashboard() {
@@ -16,6 +17,9 @@ export default function Dashboard() {
         <DrawerHeader />
         {
           page === "HEADCOUNT" && <HeadCounterChart />
+        }
+        {
+          page === "TURNOVER" && <TurnoverChart />
         }
       </ContentContainer>
     </Box>

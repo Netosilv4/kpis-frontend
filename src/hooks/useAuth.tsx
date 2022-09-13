@@ -41,7 +41,10 @@ const useAuth = () => {
         } catch (err: any) {
             setLoading(false)
             localStorage.removeItem('kpis-token')
-            setError(err.response.data.message)
+            if(err.response) {
+                return setError(err.response.data.message)
+            }
+            setError('Erro interno, tente novamente mais tarde')
         }
     }
 

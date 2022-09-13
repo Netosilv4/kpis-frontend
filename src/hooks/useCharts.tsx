@@ -1,11 +1,12 @@
-import axios from "axios";
 import dayjs, { Dayjs } from "dayjs";
 import { useCallback, useContext, useEffect, useState } from "react"
-import { AuthContext } from "../contexts/AuthProvider";
 import { loadingContext } from "../contexts/Loading";
+import { fetchChartData } from "../services/charts";
+import Swal from 'sweetalert2';
+import { AuthContext } from "../contexts/AuthProvider";
+import { swalHandler } from "../errors/swalHandler";
 
-const { REACT_APP_API_URL } = process.env;
-interface ChartData {
+export interface ChartData {
     chartData: {
         id: string,
         color: string,
@@ -45,28 +46,23 @@ export enum EnumCharts {
 const useCharts = (chart: EnumCharts) => {
     const [dateRange, setDateRange] = useState<Dayjs>(dayjs(new Date()));
     const [ data, setData ] = useState<ChartData | undefined>();
-    const { user } = useContext(AuthContext)
-
     const { setLoading } = useContext(loadingContext)
+    const { logout } = useContext(AuthContext);
+
 
     const getData = useCallback(async () => {
-        try {
-            setLoading(true)
-            const response = await axios.get(`${REACT_APP_API_URL}/${chart}`, {
-                headers: {
-                  "authorization": "Bearer " + user?.token
-                },
-                params: {
-                    mes: dateRange.month(),
-                    ano: dateRange.year()
-                }
-              })
-              setLoading(false)
-              setData(response.data)
-        } catch (err: any) {
+        setLoading(true)
+        const response = await fetchChartData(chart, dateRange)
+        if(response.status === 200) {
             setLoading(false)
+            return setData(response.data as ChartData)
         }
-    }, [user, chart, setLoading, dateRange])
+        setLoading(false)
+        swalHandler({
+            status: response.status,
+            logoutCallback: logout
+        })
+    }, [chart, setLoading, dateRange])
   
     useEffect(() => {
       getData()

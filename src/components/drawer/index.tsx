@@ -11,13 +11,34 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { DrawerContext } from '../../contexts/DrawerProvider';
 import { DrawerHeader, StyledDrawer } from './styles';
-import { Logout, BarChart } from '@mui/icons-material';
+import { Logout, BarChart, ShowChart } from '@mui/icons-material';
 import { AuthContext } from '../../contexts/AuthProvider';
 
 
 export default function MiniDrawer() {
-  const { open, handleDrawerClose } = React.useContext(DrawerContext)
+  const { open, handleDrawerClose, setPage } = React.useContext(DrawerContext)
   const { logout } = React.useContext(AuthContext)
+
+  const DRAWER_ITEMS = [
+    {
+      text: "Análise HeadCount",
+      icon: <BarChart />,
+      onClick: () => setPage("HEADCOUNT")
+    },
+    {
+      text: "Análise turnover",
+      icon: <ShowChart />,
+      onClick: () => setPage("TURNOVER")
+    }
+  ]
+
+  const DRAWER_SYSTEM_ITEMS = [
+    {
+      text: "Logout",
+      icon: <Logout />,
+      onClick: logout
+    }
+  ]
 
   const theme = useTheme();
 
@@ -30,14 +51,15 @@ export default function MiniDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Insights Charts'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+          {DRAWER_ITEMS.map((item, index) => (
+            <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
+                onClick={item.onClick}
               >
                 <ListItemIcon
                   sx={{
@@ -46,24 +68,24 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                    <BarChart />
+                    {item.icon}
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
         <Divider />
         <List>
-          {['logout'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+          {DRAWER_SYSTEM_ITEMS.map((item, index) => (
+            <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
-                onClick={logout}
+                onClick={item.onClick}
               >
                 <ListItemIcon
                   sx={{
@@ -72,9 +94,9 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  <Logout />
+                  {item.icon}
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
           ))}
