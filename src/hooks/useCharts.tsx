@@ -16,6 +16,9 @@ interface ChartData {
         ]
     }
     generalData: {
+        totalEmpregadosInicio: number,
+        totalEmpregadosFim: number,
+        balancoGeral: number,
         recisoesMes: [
             {
                 empregadoId: string,
@@ -61,7 +64,6 @@ const useCharts = (chart: EnumCharts) => {
               setData(response.data)
         } catch (err: any) {
             setLoading(false)
-            console.log(err)
         }
     }, [user, REACT_APP_API_URL, chart, setLoading, dateRange])
   
