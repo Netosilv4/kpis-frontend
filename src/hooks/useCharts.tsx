@@ -4,6 +4,7 @@ import { useCallback, useContext, useEffect, useState } from "react"
 import { AuthContext } from "../contexts/AuthProvider";
 import { loadingContext } from "../contexts/Loading";
 
+const { REACT_APP_API_URL } = process.env;
 interface ChartData {
     chartData: {
         id: string,
@@ -45,7 +46,7 @@ const useCharts = (chart: EnumCharts) => {
     const [dateRange, setDateRange] = useState<Dayjs>(dayjs(new Date()));
     const [ data, setData ] = useState<ChartData | undefined>();
     const { user } = useContext(AuthContext)
-    const { REACT_APP_API_URL } = process.env;
+
     const { setLoading } = useContext(loadingContext)
 
     const getData = useCallback(async () => {
@@ -56,7 +57,7 @@ const useCharts = (chart: EnumCharts) => {
                   "authorization": "Bearer " + user?.token
                 },
                 params: {
-                    mes: dateRange.month() + 1 ,
+                    mes: dateRange.month(),
                     ano: dateRange.year()
                 }
               })
@@ -65,7 +66,7 @@ const useCharts = (chart: EnumCharts) => {
         } catch (err: any) {
             setLoading(false)
         }
-    }, [user, REACT_APP_API_URL, chart, setLoading, dateRange])
+    }, [user, chart, setLoading, dateRange])
   
     useEffect(() => {
       getData()
