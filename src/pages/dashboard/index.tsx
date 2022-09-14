@@ -1,4 +1,4 @@
-import { Box } from "@mui/system";
+import { Box } from "@mui/material";
 import { useContext } from "react";
 import AppBar from "../../components/appbar";
 import MiniDrawer from "../../components/drawer";
@@ -10,7 +10,7 @@ import { DrawerContext } from "../../contexts/DrawerProvider";
 export default function Dashboard() {
   const { page } = useContext(DrawerContext)
   return (
-    <Box>
+    <Box style={{ display: "flex", flexDirection: "column", width: '100%', overflowX: "hidden"}}>
       <AppBar />
       <MiniDrawer />
       <ContentContainer component="main">

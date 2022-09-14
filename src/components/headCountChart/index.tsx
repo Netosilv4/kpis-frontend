@@ -1,5 +1,5 @@
 import { ResponsiveLine } from '@nivo/line'
-import { Box, Card, Link, TextField, Typography } from "@mui/material";
+import { Box, Card, Grid, Link, TextField, Typography } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -7,24 +7,27 @@ import { Dayjs } from 'dayjs';
 import useCharts, { EnumCharts } from "../../hooks/useCharts";
 import {GroupAdd, GroupRemove, Diversity3, PeopleAlt, Percent, Help} from '@mui/icons-material/';
 import 'dayjs/locale/pt-br';
-import { HtmlTooltip } from '../tooltips/styles';
+import StyledCard from '../cards';
 
 
 const HeadCounterChart = () => {
 
     const { data, dateRange, setDateRange } = useCharts(EnumCharts.headCountChart)
 
+
     if(!data) return null
+    
+    const baseLine = [...data?.chartData.data as Array<any>].sort((a, b) => a.y - b.y)[0].y
 
     return (
-        <div style={{ width: '100%', height: "400px", paddingTop: '20px'}}>
+        <div style={{ width: '100%',  paddingTop: '40px'}}>
+        <Box display='flex' gap={10} alignItems='center'>
         <Typography variant="h5" style={{ paddingBottom: '10px'}}>Análise Headcount</Typography>
-        <Box display="flex" style={{ gap: '20px', alignItems: "center", width: '90%', justifyContent: "space-between"}}>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
         <DatePicker
-            views={['year', 'month']}
-            label="Mês e ano"
-            toolbarPlaceholder="Selecione o mês e ano"
+            views={['year']}
+            label="Período"
+            toolbarPlaceholder="Selecione o período"
             onChange={(value) => {
               setDateRange(value as Dayjs);
             }}
@@ -32,62 +35,41 @@ const HeadCounterChart = () => {
             renderInput={(params: any) => <TextField {...params} helperText={''} />}
           />
         </LocalizationProvider>
-        <Card style={{ padding: '20px' }}>
-            <Box style={{ flexDirection: "column"}}>
-                <Typography variant='body2' style={{ fontWeight: 700, display: "flex", alignItems: "center", gap: '10px'}}>
-                    <Percent color='primary'/> Balanço geral: <Typography variant='caption' style={{ fontWeight: 400}}>{data.generalData.balancoGeral}%</Typography>
-                    <HtmlTooltip
-                        title={
-                            <>
-                                <Typography variant='caption'>
-                                    Quer saber mais sobre como é calculado o Headcount de uma empresa ?
-                                </Typography>
-                                <Typography>
-                                    <Link fontSize={14} href="https://betterfly.com/pt-br/blog/o-que-e-headcount/#:~:text=Para%20realizar%20o%20c%C3%A1lculo%20do,os%20colaboradores%20entram%20nesse%20c%C3%A1lculo." target="_blank">
-                                        Clique aqui
-                                    </Link>
-                                </Typography>
-                            </>
-                        }
-                    >
-                        <Help color='disabled' cursor='pointer' fontSize='small'/>
-                    </HtmlTooltip>
-                </Typography>
-            </Box>
-        </Card>
-        <Card style={{ padding: '20px', marginBottom: '30px'}}>
-            <Box style={{ flexDirection: "column"}}>
-                <Typography variant='body2' style={{ fontWeight: 700, display: "flex", alignItems: "center", gap: '10px'}}>
-                    <GroupAdd color='primary'/> Total admissões: <Typography variant='caption' style={{ fontWeight: 400}}>{data.generalData.admissoesMes.length}</Typography>
-                </Typography>
-                <Typography variant='body2' style={{ fontWeight: 700, display: "flex", alignItems: "center", gap: '10px'}}>
-                    <GroupRemove color='warning' /> Total recisões: <Typography variant='caption' style={{ fontWeight: 400}}>{data.generalData.recisoesMes.length}</Typography>
-                </Typography>
-                <Typography variant='body2' style={{ fontWeight: 700, display: "flex", alignItems: "center", gap: '10px'}}>
-                    <PeopleAlt color='info' /> Total de empregados no inicio do periodo: <Typography variant='caption' style={{ fontWeight: 400}}>{data.generalData.totalEmpregadosInicio}</Typography>
-                </Typography>
-                <Typography variant='body2' style={{ fontWeight: 700, display: "flex", alignItems: "center", gap: '10px'}}>
-                    <Diversity3 color='secondary'/> Total de empregados no fim do periodo: <Typography variant='caption' style={{ fontWeight: 400}}>{data.generalData.totalEmpregadosFim}</Typography>
-                </Typography>
-            </Box>
-        </Card>
         </Box>
+        <Grid container spacing={8} marginBottom={5} marginTop={1}>
+            <Grid item xs={3} md={2}>
+                <StyledCard text='Admissões' value={data.generalData.admissoesTotais} icon={<GroupAdd />}/>
+            </Grid>
+            <Grid item xs={3} md={2}>
+                <StyledCard text='Demissões' value={data.generalData.recisoesTotais} icon={<GroupAdd />}/>
+            </Grid>
+            <Grid item xs={3} md={2}>
+            <StyledCard text='Balanço geral' value={data.generalData.balancoGeral} icon={<GroupAdd />}/>
+            </Grid>
+                <Grid item xs={3} md={2}>
+            <StyledCard text='Total de colaboradores (início)' value={data.generalData.totalEmpregadosInicio} icon={<GroupAdd />}/>
+                </Grid>
+            <Grid item xs={3} md={2}>
+                <StyledCard text='Total de colaboradores (fim)' value={data.generalData.totalEmpregadosFim} icon={<GroupAdd />}/>
+            </Grid>
+        </Grid>
         <div style={{ width: '90%', display: "flex", height: '400px'}}>
         <ResponsiveLine 
           data={[data.chartData]}
-          margin={{ top: 20, right: 110, bottom: 30, left: 40 }}
-          xScale={{ type: 'band', round: true }}
+          margin={{ top: 20, right: 100, bottom: 30, left: 40 }}
           yScale={{
             type: 'linear',
             min: 'auto',
             max: 'auto',
-            stacked: true,
-            reverse: false,
-            nice: true,
-            clamp: false,
            }}
-            animate={true}
-            legends={[
+           curve="monotoneX"
+           enableGridX={true}
+           lineWidth={3}
+           enableArea={true}
+           areaBaselineValue={baseLine}
+           enableSlices="x"
+           animate={true}
+           legends={[
                 {
                     anchor: 'top-right',
                     direction: 'column',
@@ -99,7 +81,6 @@ const HeadCounterChart = () => {
             }
             areaOpacity={0.5}
             enableCrosshair
-
         />
         </div>
       </div>

@@ -2,7 +2,6 @@ import dayjs, { Dayjs } from "dayjs";
 import { useCallback, useContext, useEffect, useState } from "react"
 import { loadingContext } from "../contexts/Loading";
 import { fetchChartData } from "../services/charts";
-import Swal from 'sweetalert2';
 import { AuthContext } from "../contexts/AuthProvider";
 import { swalHandler } from "../errors/swalHandler";
 
@@ -21,20 +20,8 @@ export interface ChartData {
         totalEmpregadosInicio: number,
         totalEmpregadosFim: number,
         balancoGeral: number,
-        recisoesMes: [
-            {
-                empregadoId: string,
-                dataDeAdmissao: string
-                dataDeRecisao: string
-            }
-        ]
-        admissoesMes: [
-            {
-                empregadoId: string,
-                dataDeAdmissao: string
-                dataDeRecisao: string
-            }
-        ]
+        recisoesTotais: number,
+        admissoesTotais: number
     }
 }
 

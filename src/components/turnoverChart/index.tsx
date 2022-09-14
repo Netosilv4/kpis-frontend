@@ -15,15 +15,17 @@ const TurnoverChart = () => {
 
     if(!data) return null
 
+    const baseLine = [...data?.chartData.data as Array<any>].sort((a, b) => a.y - b.y)[0].y
+
     return (
         <div style={{ width: '100%', height: "400px", paddingTop: '20px'}}>
         <Typography variant="h5" style={{ paddingBottom: '10px'}}>Análise Turnover</Typography>
         <Box display="flex" style={{ gap: '20px', alignItems: "center", width: '90%', justifyContent: "space-between"}}>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
         <DatePicker
-            views={['year', 'month']}
-            label="Mês e ano"
-            toolbarPlaceholder="Selecione o mês e ano"
+            views={['year']}
+            label="Período"
+            toolbarPlaceholder="Selecione o período"
             onChange={(value) => {
               setDateRange(value as Dayjs);
             }}
@@ -57,10 +59,10 @@ const TurnoverChart = () => {
         <Card style={{ padding: '20px', marginBottom: '30px'}}>
             <Box style={{ flexDirection: "column"}}>
                 <Typography variant='body2' style={{ fontWeight: 700, display: "flex", alignItems: "center", gap: '10px'}}>
-                    <GroupAdd color='primary'/> Total admissões: <Typography variant='caption' style={{ fontWeight: 400}}>{data.generalData.admissoesMes.length}</Typography>
+                    <GroupAdd color='primary'/> Total admissões: <Typography variant='caption' style={{ fontWeight: 400}}>{data.generalData.admissoesTotais}</Typography>
                 </Typography>
                 <Typography variant='body2' style={{ fontWeight: 700, display: "flex", alignItems: "center", gap: '10px'}}>
-                    <GroupRemove color='warning' /> Total recisões: <Typography variant='caption' style={{ fontWeight: 400}}>{data.generalData.recisoesMes.length}</Typography>
+                    <GroupRemove color='warning' /> Total recisões: <Typography variant='caption' style={{ fontWeight: 400}}>{data.generalData.recisoesTotais}</Typography>
                 </Typography>
                 <Typography variant='body2' style={{ fontWeight: 700, display: "flex", alignItems: "center", gap: '10px'}}>
                     <PeopleAlt color='info' /> Total de empregados no inicio do periodo: <Typography variant='caption' style={{ fontWeight: 400}}>{data.generalData.totalEmpregadosInicio}</Typography>
@@ -74,8 +76,7 @@ const TurnoverChart = () => {
         <div style={{ width: '90%', display: "flex", height: '400px'}}>
         <ResponsiveLine 
           data={[data.chartData]}
-          margin={{ top: 20, right: 110, bottom: 30, left: 40 }}
-          xScale={{ type: 'band', round: true }}
+          margin={{ top: 20, right: 100, bottom: 30, left: 40 }}
           yScale={{
             type: 'linear',
             min: 'auto',
@@ -85,7 +86,10 @@ const TurnoverChart = () => {
             nice: true,
             clamp: false,
            }}
+            enableArea={true}
+            areaBaselineValue={baseLine}
             animate={true}
+            enableSlices="x"
             legends={[
                 {
                     anchor: 'top-right',
@@ -98,7 +102,6 @@ const TurnoverChart = () => {
             }
             areaOpacity={0.5}
             enableCrosshair
-
         />
         </div>
       </div>

@@ -52,7 +52,9 @@ const openedMixin = (theme: Theme): CSSObject => ({
   export const ContentContainer = styled(Box)(
     ({ theme }) => ({
         flexGrow: 1, 
-        p: 3, 
-        marginLeft: theme.spacing(12),
+        paddingLeft: theme.spacing(11),
+        height: '100vh',
+        width: `100% - ${theme.spacing(9)}`,
+        transform: `translateX(${theme.spacing(9)})`,
     })
 )
