@@ -1,20 +1,21 @@
-import { createContext, useState } from "react";
-import Loading from "../components/loading";
-
-export const loadingContext = createContext({} as LoadingProviderI)
+/* eslint-disable no-undef */
+import { createContext, useState } from 'react'
+import Loading from '../components/loading'
 
 interface LoadingProviderI {
     setLoading : (loading: boolean) => void
     loading: boolean
 }
 
-const LoadingProvider = ({ children }: { children: JSX.Element }) => {
-    const [loading, setLoading] = useState(false)
+export const loadingContext = createContext({} as LoadingProviderI)
 
-    return <loadingContext.Provider value={{
-        loading,
-        setLoading
-    }}
+const LoadingProvider = ({ children }: { children: JSX.Element }) => {
+  const [loading, setLoading] = useState(false)
+
+  return <loadingContext.Provider value={{
+    loading,
+    setLoading
+  }}
     >
         {children}
         {

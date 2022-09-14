@@ -1,7 +1,5 @@
-import { useState } from "react";
-import { createContext } from "react";
-
-export const DrawerContext = createContext({} as DrawerProviderI);
+/* eslint-disable no-undef */
+import { useState, createContext } from 'react'
 
 interface DrawerProviderI {
     open: boolean
@@ -11,29 +9,31 @@ interface DrawerProviderI {
     page: string
 }
 
+export const DrawerContext = createContext({} as DrawerProviderI)
+
 export const DrawerProvider = ({ children } : { children: JSX.Element}) => {
-    const [open, setOpen] = useState(false);
-    const [page, setPage] = useState("HEADCOUNT");
-    
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-    
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
-    
-    return (
+  const [open, setOpen] = useState(false)
+  const [page, setPage] = useState('HEADCOUNT')
+
+  const handleDrawerOpen = () => {
+    setOpen(true)
+  }
+
+  const handleDrawerClose = () => {
+    setOpen(false)
+  }
+
+  return (
         <DrawerContext.Provider
         value={{
-            open,
-            handleDrawerOpen,
-            handleDrawerClose,
-            setPage,
-            page
+          open,
+          handleDrawerOpen,
+          handleDrawerClose,
+          setPage,
+          page
         }}
         >
         {children}
         </DrawerContext.Provider>
-    );
+  )
 }

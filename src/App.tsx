@@ -1,14 +1,14 @@
-import { useContext } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { AuthContext } from "./contexts/AuthProvider";
-import { DrawerProvider } from "./contexts/DrawerProvider";
-import Dashboard from "./pages/dashboard";
-import SignIn from "./pages/login";
+import { useContext } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { AuthContext } from './contexts/AuthProvider'
+import { DrawerProvider } from './contexts/DrawerProvider'
+import Dashboard from './pages/dashboard'
+import SignIn from './pages/login'
 
-function App() {
+function App () {
   const { user } = useContext(AuthContext)
 
-  if(user) {
+  if (user) {
     return (
         <DrawerProvider>
           <BrowserRouter>
@@ -26,4 +26,4 @@ function App() {
   )
 }
 
-export default App;
+export default App
