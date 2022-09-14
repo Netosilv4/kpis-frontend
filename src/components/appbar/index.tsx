@@ -13,9 +13,9 @@ const AppBar = () => {
   const { user } = useContext(AuthContext)
   const { width } = useWindowSize()
   return (
-        <StyledAppBar position="fixed" open={open}>
-        <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box display="flex" alignItems="center">
+    <StyledAppBar position="fixed" open={open}>
+      <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box display="flex" alignItems="center">
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -28,22 +28,22 @@ const AppBar = () => {
           >
             <MenuIcon />
           </IconButton>
-            {
-              width && width > 600 && (
-                <Typography variant="h6" noWrap component="div">
+          {
+            width && width > 600 && (
+              <Typography variant="h6" noWrap component="div">
                   Key People Insights - Dashboard
-                </Typography>
-              )
-            }
-          </Box>
-          <Box style={{ alignItems: 'center', display: 'flex', gap: '10px' }}>
+              </Typography>
+            )
+          }
+        </Box>
+        <Box style={{ alignItems: 'center', display: 'flex', gap: '10px' }}>
           <Person />
           <Typography>
-              {user?.nome}
-            </Typography>
-          </Box>
-        </Toolbar>
-      </StyledAppBar>
+            {user?.nome}
+          </Typography>
+        </Box>
+      </Toolbar>
+    </StyledAppBar>
   )
 }
 

@@ -6,28 +6,28 @@ import { AuthContext } from '../contexts/AuthProvider'
 import { swalHandler } from '../errors/swalHandler'
 
 export interface ChartData {
-    chartData: {
-        id: string,
-        color: string,
-        data: [
-            {
-                x: string,
-                y: number
-            }
-        ]
-    }
-    generalData: {
-        totalEmpregadosInicio: number,
-        totalEmpregadosFim: number,
-        balancoGeral: number,
-        recisoesTotais: number,
-        admissoesTotais: number
-    }
+  chartData: {
+    id: string,
+    color: string,
+    data: [
+      {
+        x: string,
+        y: number
+      }
+    ]
+  }
+  generalData: {
+    totalEmpregadosInicio: number,
+    totalEmpregadosFim: number,
+    balancoGeral: number,
+    recisoesTotais: number,
+    admissoesTotais: number
+  }
 }
 
 export enum EnumCharts {
-    headCountChart = 'headCountChart',
-    turnoverChart = 'turnoverChart',
+  headCountChart = 'headCountChart',
+  turnoverChart = 'turnoverChart',
 }
 
 const useCharts = (chart: EnumCharts) => {

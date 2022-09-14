@@ -3,10 +3,10 @@ import { createContext, FormEvent } from 'react'
 import useAuth, { UserInterface } from '../hooks/useAuth'
 
 interface AuthContextData {
-    login: (email: FormEvent<HTMLFormElement>) => void
-    user: UserInterface | undefined
-    error: string | undefined
-    logout: () => void
+  login: (email: FormEvent<HTMLFormElement>) => void
+  user: UserInterface | undefined
+  error: string | undefined
+  logout: () => void
 }
 
 export const AuthContext = createContext({} as AuthContextData)
@@ -20,9 +20,9 @@ const AuthProvider = ({ children } : { children: JSX.Element}) => {
     error,
     logout
   }}
-    >
-        {children}
-    </AuthContext.Provider>
+  >
+    {children}
+  </AuthContext.Provider>
 }
 
 export default AuthProvider

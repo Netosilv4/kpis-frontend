@@ -52,7 +52,7 @@ export const StyledDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => pro
 export const ContentContainer = styled(Box)(
   ({ theme }) => ({
     display: 'flex',
-    padding: `${theme.spacing(10)} ${theme.spacing(6)}`,
+    padding: `${theme.spacing(8)} ${theme.spacing(6)}`,
     width: '100%',
     alignContent: 'center',
     justifyContent: 'center'

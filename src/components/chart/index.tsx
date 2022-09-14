@@ -8,22 +8,33 @@ import useCharts, { EnumCharts } from '../../hooks/useCharts'
 import 'dayjs/locale/pt-br'
 import Cards from '../../components/cards'
 import useWindowSize from '../../hooks/useWindowSize'
+import { returnChartTooltip } from '../utils/chart'
 
-const HeadCounterChart = () => {
-  const { data, dateRange, setDateRange } = useCharts(EnumCharts.headCountChart)
+interface ChartI {
+  type: EnumCharts
+}
+
+const Chart = (props: ChartI) => {
+  const { type } = props
+  const { data, dateRange, setDateRange } = useCharts(type)
   const { width } = useWindowSize()
 
-  if (!data) return null
+  if (!data || !data.chartData || !data.generalData) return null
 
   const baseLine = [...data?.chartData.data as Array<any>].sort((a, b) => a.y - b.y)[0].y
   const isMobile = width && width < 600
 
   return (
-        <div style={{ width: '100%', paddingTop: '40px' }}>
-        <Box display='flex' gap={5} alignItems='center' flexWrap='wrap' justifyContent='space-between'>
-        <Typography variant="h5" style={{ paddingBottom: '10px' }}>Análise Headcount</Typography>
+    <div style={{ width: '100%', paddingTop: '40px' }}>
+      <Box display='flex' gap={5} alignItems='center' flexWrap='wrap' justifyContent='space-between'>
+        <Typography variant="h5" display='flex' gap={1} alignItems='center'>
+              Análise {data.chartData.id}
+          {
+            returnChartTooltip(data.chartData.id)
+          }
+        </Typography>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
-        <DatePicker
+          <DatePicker
             views={['year']}
             label="Período"
             toolbarPlaceholder="Selecione o período"
@@ -34,9 +45,9 @@ const HeadCounterChart = () => {
             renderInput={(params: any) => <TextField {...params} helperText={''} />}
           />
         </LocalizationProvider>
-        </Box>
-        <Cards chartData={data} />
-        <div style={{ width: '100%', display: 'flex', height: '400px' }}>
+      </Box>
+      <Cards chartData={data} />
+      <div style={{ width: '100%', display: 'flex', height: '400px' }}>
         <ResponsiveLine
           data={[data.chartData]}
           margin={{ top: 20, right: !isMobile ? 100 : 20, bottom: !isMobile ? 30 : 0, left: !isMobile ? 40 : 0 }}
@@ -45,30 +56,29 @@ const HeadCounterChart = () => {
             min: 'auto',
             max: 'auto'
           }}
-           curve="monotoneX"
-           enableGridX={true}
-           lineWidth={3}
-           enableArea={true}
-           areaBaselineValue={baseLine}
-           enableSlices="x"
-           animate={true}
-           legends={[
-             {
-               anchor: 'top-right',
-               direction: 'column',
-               itemWidth: 80,
-               itemHeight: 20,
-               translateX: 100
+          enableGridX={true}
+          lineWidth={3}
+          enableArea={true}
+          areaBaselineValue={baseLine}
+          enableSlices="x"
+          animate={true}
+          legends={[
+            {
+              anchor: 'top-right',
+              direction: 'column',
+              itemWidth: 80,
+              itemHeight: 20,
+              translateX: 100
 
-             }]
-            }
-            colors={{ scheme: 'category10' }}
-            areaOpacity={0.5}
-            enableCrosshair
+            }]
+          }
+          colors={{ scheme: 'category10' }}
+          areaOpacity={0.5}
+          enableCrosshair
         />
-        </div>
       </div>
+    </div>
   )
 }
 
-export default HeadCounterChart
+export default Chart

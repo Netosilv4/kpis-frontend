@@ -2,10 +2,10 @@ import { Box } from '@mui/material'
 import { useContext } from 'react'
 import AppBar from '../../components/appbar'
 import MiniDrawer from '../../components/drawer'
-import { ContentContainer, DrawerHeader } from '../../components/drawer/styles'
-import HeadCounterChart from '../headcountChart'
-import TurnoverChart from '../turnoverChart'
+import { ContentContainer } from '../../components/drawer/styles'
 import { DrawerContext } from '../../contexts/DrawerProvider'
+import Chart from '../../components/chart'
+import { EnumCharts } from '../../services/charts'
 
 export default function Dashboard () {
   const { page } = useContext(DrawerContext)
@@ -14,14 +14,14 @@ export default function Dashboard () {
       <Box display='flex'>
         <AppBar />
         <MiniDrawer />
-          <ContentContainer component="main">
-                {
-                  page === 'HEADCOUNT' && <HeadCounterChart />
-                }
-                {
-                  page === 'TURNOVER' && <TurnoverChart />
-                }
-          </ContentContainer>
+        <ContentContainer component="main">
+          {
+            page === 'HEADCOUNT' && <Chart type={EnumCharts.headCountChart} />
+          }
+          {
+            page === 'TURNOVER' && <Chart type={EnumCharts.turnoverChart} />
+          }
+        </ContentContainer>
       </Box>
     </Box>
   )

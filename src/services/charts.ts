@@ -5,13 +5,13 @@ import { ChartData } from '../hooks/useCharts'
 const { REACT_APP_API_URL } = process.env
 
 export enum EnumCharts {
-    headCountChart = 'headCountChart',
-    turnoverChart = 'turnoverChart',
+  headCountChart = 'headCountChart',
+  turnoverChart = 'turnoverChart',
 }
 
 interface ChartApiResponse {
-    data: ChartData | string
-    status: number
+  data: ChartData | string
+  status: number
 }
 
 export const fetchChartData = async (chart: EnumCharts, dateRange: Dayjs): Promise<ChartApiResponse> => {
@@ -43,7 +43,7 @@ export const fetchChartData = async (chart: EnumCharts, dateRange: Dayjs): Promi
       }
     }
     return {
-      data: 'Erro interno',
+      data: 'Erro interno ao tentar buscar dados',
       status: 500
     }
   }

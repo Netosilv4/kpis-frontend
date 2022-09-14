@@ -2,11 +2,11 @@
 import { useState, createContext } from 'react'
 
 interface DrawerProviderI {
-    open: boolean
-    handleDrawerOpen: () => void
-    handleDrawerClose: () => void
-    setPage: (page: string) => void
-    page: string
+  open: boolean
+  handleDrawerOpen: () => void
+  handleDrawerClose: () => void
+  setPage: (page: string) => void
+  page: string
 }
 
 export const DrawerContext = createContext({} as DrawerProviderI)
@@ -24,16 +24,16 @@ export const DrawerProvider = ({ children } : { children: JSX.Element}) => {
   }
 
   return (
-        <DrawerContext.Provider
-            value={{
-              open,
-              handleDrawerOpen,
-              handleDrawerClose,
-              setPage,
-              page
-            }}
-        >
-            {children}
-        </DrawerContext.Provider>
+    <DrawerContext.Provider
+      value={{
+        open,
+        handleDrawerOpen,
+        handleDrawerClose,
+        setPage,
+        page
+      }}
+    >
+      {children}
+    </DrawerContext.Provider>
   )
 }

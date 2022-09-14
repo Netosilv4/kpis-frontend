@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
@@ -27,7 +27,7 @@ export default function SignIn () {
             alignItems: 'center'
           }}
         >
-            <img src='/icons/logo.svg' alt='Logo kpis' style={{ width: '75px', padding: '10px' }}/>
+          <img src='/icons/logo.svg' alt='Logo kpis' style={{ width: '75px', padding: '10px' }}/>
           <Typography component="h1" variant="h5">
             Entrar
           </Typography>

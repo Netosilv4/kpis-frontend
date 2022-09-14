@@ -1,9 +1,9 @@
 import Swal from 'sweetalert2'
 
 interface SwalHandler {
-    status: number;
-    logoutCallback?: () => void;
-    genericCallback?: () => void;
+  status: number;
+  logoutCallback?: () => void;
+  genericCallback?: () => void;
 }
 
 export const swalHandler = (props: SwalHandler) => {
