@@ -20,12 +20,12 @@ export default function MiniDrawer () {
 
   const DRAWER_ITEMS = [
     {
-      text: 'Análise HeadCount',
+      text: 'Análise Headcount',
       icon: <BarChart />,
       onClick: () => setPage('HEADCOUNT')
     },
     {
-      text: 'Análise turnover',
+      text: 'Análise Turnover',
       icon: <ShowChart />,
       onClick: () => setPage('TURNOVER')
     }

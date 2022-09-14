@@ -25,15 +25,15 @@ export const DrawerProvider = ({ children } : { children: JSX.Element}) => {
 
   return (
         <DrawerContext.Provider
-        value={{
-          open,
-          handleDrawerOpen,
-          handleDrawerClose,
-          setPage,
-          page
-        }}
+            value={{
+              open,
+              handleDrawerOpen,
+              handleDrawerClose,
+              setPage,
+              page
+            }}
         >
-        {children}
+            {children}
         </DrawerContext.Provider>
   )
 }

@@ -58,7 +58,7 @@ const Cards = (props: StyledCardProps) => {
             <Grid item xs={12} md={2} sm={6}>
                 <StyledCard>
                     <CardText variant="body2" >
-                        <GroupAdd />
+                        <GroupAdd color='success'/>
                         Total fim do período
                         <Typography variant="h6" fontWeight={700}>
                             {chartData.generalData.totalEmpregadosFim}

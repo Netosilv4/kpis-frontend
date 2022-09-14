@@ -61,6 +61,7 @@ const TurnoverChart = () => {
                     translateX: 100
                   }]
                 }
+                colors={{ scheme: 'category10' }}
                 areaOpacity={0.5}
                 enableCrosshair
             />

@@ -3,10 +3,11 @@ import Swal from 'sweetalert2'
 interface SwalHandler {
     status: number;
     logoutCallback?: () => void;
+    genericCallback?: () => void;
 }
 
 export const swalHandler = (props: SwalHandler) => {
-  const { status, logoutCallback } = props
+  const { status, logoutCallback, genericCallback } = props
 
   if (status === 401) {
     return Swal.fire({
@@ -23,5 +24,9 @@ export const swalHandler = (props: SwalHandler) => {
     text: 'Tente novamente mais tarde',
     icon: 'error',
     confirmButtonText: 'Ok'
-  }).then(() => window.location.reload())
+  }).then(() => {
+    if (genericCallback) return genericCallback()
+    if (!genericCallback && logoutCallback) return logoutCallback()
+    window.location.reload()
+  })
 }
