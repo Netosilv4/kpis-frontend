@@ -28,7 +28,6 @@ export const fetchChartData = async (chart: EnumCharts, dateRange: Dayjs): Promi
         authorization: 'Bearer ' + JSON.parse(user).token
       },
       params: {
-        mes: dateRange.month(),
         ano: dateRange.year()
       }
     })
