@@ -1,20 +1,73 @@
-import { Card, Typography } from '@mui/material'
+import { GroupAdd, GroupRemove, People, Percent } from '@mui/icons-material'
+import { Card, Grid, Typography } from '@mui/material'
+import { ChartData } from '../../hooks/useCharts'
+import { CardText, StyledCard } from './styles'
 
 interface StyledCardProps {
-    text: string,
-    value: number,
-    icon: any
+    chartData: ChartData
 }
 
-const StyledCard = (props: StyledCardProps) => {
-  const { text, value, icon } = props
+const Cards = (props: StyledCardProps) => {
+  const { chartData } = props
   return (
-    <Card style={{ padding: '20px', maxHeight: '50px', minHeight: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Typography variant='body2' style={{ fontWeight: 700, display: 'flex', alignItems: 'center', gap: '10px' }}>
-            {icon} {text} <Typography variant='caption' style={{ fontWeight: 400 }}>{value}</Typography>
-        </Typography>
-    </Card>
+        <Grid container spacing={4} marginBottom={5} marginTop={1} justifyContent='center'>
+            <Grid item xs={12} md={2} sm={6} >
+                <StyledCard>
+                    <CardText variant="body2" >
+                        <Percent color='primary'/>
+                        Balanço geral
+                        <Typography variant="h6" fontWeight={700}>
+                            {chartData.generalData.balancoGeral}%
+                        </Typography>
+                    </CardText>
+                </StyledCard>
+            </Grid>
+            <Grid item xs={12} md={2} sm={6} >
+                <StyledCard>
+                    <CardText variant="body2" >
+                        <GroupAdd color='secondary'/>
+                        Admissões
+                        <Typography variant="h6" fontWeight={700}>
+                            {chartData.generalData.admissoesTotais}
+                        </Typography>
+                    </CardText>
+                </StyledCard>
+            </Grid>
+            <Grid item xs={12} md={2} sm={6} >
+                <StyledCard>
+                    <CardText variant="body2" >
+                        <GroupRemove color='error'/>
+                        Recisões
+                        <Typography variant="h6" fontWeight={700}>
+                            {chartData.generalData.recisoesTotais}
+                        </Typography>
+                    </CardText>
+                </StyledCard>
+            </Grid>
+            <Grid item xs={12} md={2} sm={6}>
+                <StyledCard>
+                    <CardText variant="body2" >
+                        <People color='warning'/>
+                        Total inicio do período
+                        <Typography variant="h6" fontWeight={700}>
+                            {chartData.generalData.totalEmpregadosInicio}
+                        </Typography>
+                    </CardText>
+                </StyledCard>
+            </Grid>
+            <Grid item xs={12} md={2} sm={6}>
+                <StyledCard>
+                    <CardText variant="body2" >
+                        <GroupAdd />
+                        Total fim do período
+                        <Typography variant="h6" fontWeight={700}>
+                            {chartData.generalData.totalEmpregadosFim}
+                        </Typography>
+                    </CardText>
+                </StyledCard>
+            </Grid>
+        </Grid>
   )
 }
 
-export default StyledCard
+export default Cards

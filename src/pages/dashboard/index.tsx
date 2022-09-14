@@ -3,8 +3,8 @@ import { useContext } from 'react'
 import AppBar from '../../components/appbar'
 import MiniDrawer from '../../components/drawer'
 import { ContentContainer, DrawerHeader } from '../../components/drawer/styles'
-import HeadCounterChart from '../../components/headCountChart'
-import TurnoverChart from '../../components/turnoverChart'
+import HeadCounterChart from '../headcountChart'
+import TurnoverChart from '../turnoverChart'
 import { DrawerContext } from '../../contexts/DrawerProvider'
 
 export default function Dashboard () {
