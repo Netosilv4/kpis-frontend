@@ -1,5 +1,5 @@
 import { ResponsiveLine } from '@nivo/line'
-import { Box, TextField, Typography } from '@mui/material'
+import { TextField } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -9,6 +9,7 @@ import 'dayjs/locale/pt-br'
 import Cards from '../../components/cards'
 import useWindowSize from '../../hooks/useWindowSize'
 import { returnChartTooltip } from '../utils/chart'
+import { ChartContainer, ChartContainerBody, ChartHeader, ChartTitle } from './styles'
 
 interface ChartI {
   type: EnumCharts
@@ -25,14 +26,14 @@ const Chart = (props: ChartI) => {
   const isMobile = width && width < 600
 
   return (
-    <div style={{ width: '100%', paddingTop: '40px' }}>
-      <Box display='flex' gap={5} alignItems='center' flexWrap='wrap' justifyContent='space-between'>
-        <Typography variant="h5" display='flex' gap={1} alignItems='center'>
+    <ChartContainer>
+      <ChartHeader>
+        <ChartTitle variant="h5">
               Análise {data.chartData.id}
           {
             returnChartTooltip(data.chartData.id)
           }
-        </Typography>
+        </ChartTitle>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
           <DatePicker
             views={['year']}
@@ -45,9 +46,9 @@ const Chart = (props: ChartI) => {
             renderInput={(params: any) => <TextField {...params} helperText={''} />}
           />
         </LocalizationProvider>
-      </Box>
+      </ChartHeader>
       <Cards chartData={data} />
-      <div style={{ width: '100%', display: 'flex', height: '400px' }}>
+      <ChartContainerBody>
         <ResponsiveLine
           data={[data.chartData]}
           margin={{ top: 20, right: !isMobile ? 100 : 20, bottom: !isMobile ? 30 : 0, left: !isMobile ? 40 : 0 }}
@@ -76,8 +77,8 @@ const Chart = (props: ChartI) => {
           areaOpacity={0.5}
           enableCrosshair
         />
-      </div>
-    </div>
+      </ChartContainerBody>
+    </ChartContainer>
   )
 }
 
